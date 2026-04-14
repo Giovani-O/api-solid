@@ -1,4 +1,5 @@
 import { app } from './app.js'
+import { env } from './env.js'
 
 app
   .listen({
@@ -6,5 +7,5 @@ app
     port: 3333,
   })
   .then(() => {
-    console.log('[HTTP Server Running]')
+    console.log(`[HTTP Server Running on port ${env.PORT}]`)
   })
