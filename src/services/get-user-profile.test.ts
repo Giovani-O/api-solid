@@ -2,9 +2,8 @@ import { hash } from 'bcryptjs'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository.js'
 import 'node:crypto'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { InvalidCredentialError } from './errors/invalid-credentials.error.js'
-import { GetUserProfileService } from './get-user-profile.js'
 import { ResourceNotFoundError } from './errors/resource-not-found.error.js'
+import { GetUserProfileService } from './get-user-profile.js'
 
 let inMemoryRepository: InMemoryUsersRepository
 let sut: GetUserProfileService
