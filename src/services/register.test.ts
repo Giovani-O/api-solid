@@ -1,19 +1,24 @@
 import { compare } from 'bcryptjs'
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository.js'
 import { UserAlreadyExistsError } from './errors/user-already-exists.error.js'
 import { RegisterService } from './register.js'
 import 'node:crypto'
 import { randomUUID } from 'node:crypto'
 
-describe('Register service tests', () => {
-  it('should be able to register', async () => {
-    const inMemoryRepository = new InMemoryUsersRepository()
-    const registerService = new RegisterService(inMemoryRepository)
+let inMemoryRepository: InMemoryUsersRepository
+let sut: RegisterService
 
+describe('Register service tests', () => {
+  beforeEach(() => {
+    inMemoryRepository = new InMemoryUsersRepository()
+    sut = new RegisterService(inMemoryRepository)
+  })
+
+  it('should be able to register', async () => {
     const email = `${randomUUID()}@${randomUUID()}.com`
 
-    const { user } = await registerService.execute({
+    const { user } = await sut.execute({
       name: 'Dana Zane',
       email,
       password: 'r3dc@met',
@@ -24,10 +29,7 @@ describe('Register service tests', () => {
   })
 
   it('should encrypt user password on registration', async () => {
-    const inMemoryRepository = new InMemoryUsersRepository()
-    const registerService = new RegisterService(inMemoryRepository)
-
-    const { user } = await registerService.execute({
+    const { user } = await sut.execute({
       name: 'Dana Zane',
       email: `${randomUUID()}@${randomUUID()}.com`,
       password: 'r3dc@met',
@@ -38,19 +40,16 @@ describe('Register service tests', () => {
   })
 
   it('should should not register if email is already in use', async () => {
-    const inMemoryRepository = new InMemoryUsersRepository()
-    const registerService = new RegisterService(inMemoryRepository)
-
     const email = `${randomUUID()}@${randomUUID()}.com`
 
-    await registerService.execute({
+    await sut.execute({
       name: 'Dana Zane',
       email,
       password: '123456',
     })
 
     await expect(
-      registerService.execute({
+      sut.execute({
         name: 'Dana Zane',
         email,
         password: '123456',
