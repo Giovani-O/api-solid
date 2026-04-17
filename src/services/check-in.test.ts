@@ -1,4 +1,4 @@
-import { Decimal } from '@prisma/client/runtime/client'
+import { Decimal } from '@prisma/client/runtime/library.js'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository.js'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository.js'
 import 'node:crypto'
@@ -16,20 +16,22 @@ const testCheckIn = {
   userLongitude: 0,
 }
 
+const testGym = {
+  id: 'gym-01',
+  title: 'Academia Teste',
+  description: '',
+  phone: '',
+  latitude: new Decimal(0),
+  longitude: new Decimal(0),
+}
+
 describe('Check In service tests', () => {
   beforeEach(() => {
     inMemoryCheckInsRepository = new InMemoryCheckInsRepository()
     inMemoryGymsRepository = new InMemoryGymsRepository()
     sut = new CheckInService(inMemoryCheckInsRepository, inMemoryGymsRepository) // System under test
 
-    inMemoryGymsRepository.items.push({
-      id: 'gym-01',
-      title: 'Academia Teste',
-      description: '',
-      phone: '',
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
-    })
+    inMemoryGymsRepository.items.push(testGym)
 
     vi.useFakeTimers()
   })
@@ -62,5 +64,23 @@ describe('Check In service tests', () => {
     const { checkIn } = await sut.execute(testCheckIn)
 
     expect(checkIn.id).toEqual(expect.any(String))
+  })
+
+  it('should not be able to check in if far from gym', async () => {
+    inMemoryGymsRepository.items.push({
+      ...testGym,
+      id: 'gym-02',
+      latitude: Decimal(40.3687722),
+      longitude: Decimal(49.8364514),
+    })
+
+    await expect(
+      sut.execute({
+        ...testCheckIn,
+        gymId: 'gym-02',
+        userLatitude: 40.373094,
+        userLongitude: 49.8502173,
+      }),
+    ).rejects.toBeInstanceOf(Error)
   })
 })
