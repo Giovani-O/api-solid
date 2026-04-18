@@ -12,8 +12,8 @@ let sut: CheckInService
 const testCheckIn = {
   gymId: 'gym-01',
   userId: 'user-01',
-  userLatitude: 0,
-  userLongitude: 0,
+  userLatitude: -23.5614,
+  userLongitude: -46.6561,
 }
 
 const testGym = {
@@ -21,17 +21,17 @@ const testGym = {
   title: 'Academia Teste',
   description: '',
   phone: '',
-  latitude: new Decimal(0),
-  longitude: new Decimal(0),
+  latitude: -23.5614,
+  longitude: -46.6561,
 }
 
 describe('Check In service tests', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     inMemoryCheckInsRepository = new InMemoryCheckInsRepository()
     inMemoryGymsRepository = new InMemoryGymsRepository()
     sut = new CheckInService(inMemoryCheckInsRepository, inMemoryGymsRepository) // System under test
 
-    inMemoryGymsRepository.items.push(testGym)
+    await inMemoryGymsRepository.create(testGym)
 
     vi.useFakeTimers()
   })
