@@ -2,7 +2,6 @@ import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-c
 import 'node:crypto'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { FetchUserCheckInHistoryService } from './fetch-user-check-in-history.js'
-import { check } from 'zod/mini'
 
 let inMemoryCheckInsRepository: InMemoryCheckInsRepository
 let sut: FetchUserCheckInHistoryService
