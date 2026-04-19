@@ -1,15 +1,15 @@
 import { randomUUID } from 'node:crypto'
 import { Decimal } from '@prisma/client/runtime/client'
+import {
+  type Coordinate,
+  getDistanceBetweenCoordinates,
+} from '@/hooks/get-distance-between-coordinates.js'
 import type { Gym } from '../../../generated/prisma/client.js'
 import type { GymCreateInput } from '../../../generated/prisma/models.js'
 import type {
   FindManyNearbyParams,
   GymsRepository,
 } from '../gyms-repository.js'
-import {
-  getDistanceBetweenCoordinates,
-  type Coordinate,
-} from '@/hooks/get-distance-between-coordinates.js'
 
 export class InMemoryGymsRepository implements GymsRepository {
   public items: Gym[] = []
