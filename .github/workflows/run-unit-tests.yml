@@ -4,8 +4,8 @@ on: [push, pull_request]
 
 jobs:
   run-unit-tests:
-    name: Run Uni Tests
-    runs-on: fedora-latest
+    name: Run Unit Tests
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v6
