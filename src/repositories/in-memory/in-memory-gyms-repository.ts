@@ -3,7 +3,7 @@ import { Decimal } from '@prisma/client/runtime/client'
 import {
   type Coordinate,
   getDistanceBetweenCoordinates,
-} from '@/hooks/get-distance-between-coordinates.js'
+} from '@/utils/get-distance-between-coordinates.js'
 import type { Gym } from '../../../generated/prisma/client.js'
 import type { GymCreateInput } from '../../../generated/prisma/models.js'
 import type {

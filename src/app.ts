@@ -6,7 +6,11 @@ import { checkInRoutes } from './http/controllers/check-ins/routes.js'
 import { gymRoutes } from './http/controllers/gyms/routes.js'
 import { userRoutes } from './http/controllers/users/routes.js'
 
-export const app = fastify()
+export const app = fastify({
+  logger: {
+    level: 'info',
+  },
+})
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,

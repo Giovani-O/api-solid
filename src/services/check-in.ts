@@ -1,6 +1,6 @@
-import { getDistanceBetweenCoordinates } from '@/hooks/get-distance-between-coordinates.js'
 import type { CheckInsRepository } from '@/repositories/check-ins-repository.js'
 import type { GymsRepository } from '@/repositories/gyms-repository.js'
+import { getDistanceBetweenCoordinates } from '@/utils/get-distance-between-coordinates.js'
 import type { CheckIn } from '../../generated/prisma/client.js'
 import { MaxDistanceError } from './errors/max-distance-error.js'
 import { ResourceNotFoundError } from './errors/resource-not-found.error.js'
