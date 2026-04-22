@@ -52,9 +52,9 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
     const checkIns = await prisma.checkIn.findMany({
       where: {
         user_id: userId,
-        take: 20,
-        skip: (page - 1) * 20,
       },
+      take: 20,
+      skip: (page - 1) * 20,
     })
 
     return checkIns

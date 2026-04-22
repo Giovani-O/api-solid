@@ -14,11 +14,11 @@ export async function createCheckIn(
   })
 
   const createCheckInBodySchema = z.object({
-    userLatitude: z.number(),
-    userLongitude: z.number(),
+    userLatitude: z.coerce.number(),
+    userLongitude: z.coerce.number(),
   })
 
-  const { gymId } = createCheckInParamsSchema.parse(request.body)
+  const { gymId } = createCheckInParamsSchema.parse(request.params)
   const { userLatitude, userLongitude } = createCheckInBodySchema.parse(
     request.body,
   )
