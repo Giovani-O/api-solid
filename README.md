@@ -201,7 +201,3 @@ api-solid/
 GitHub Actions workflows:
 - **Unit Tests:** Runs on push/PR
 - **E2E Tests:** Runs on PR with PostgreSQL container
-
-## License
-
-ISC
